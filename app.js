@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const grid = document.querySelector(".grid");
+    const grid = document.querySelector('.grid');
+    const flagsLeft = document.querySelector('#flags-left')
     let width = 10
     let height = 10
     let squareWidth = 40
     let bombAmount = 20
+    let flags = 0
     let squares = []
     let isGameOver = false
 
@@ -17,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .sort(() => Math.random() - 0.5)
             .sort(() => Math.random() - 0.5)
             .sort(() => Math.random() - 0.5)
-            .sort(() => Math.random() - 0.5);
+            .sort(() => Math.random() - 0.5); // multi random to spread results
         grid.style.height = height*squareWidth + "px"
         grid.style.width = width*squareWidth + "px"
         for (let i = 0; i < width * height; i++) {
@@ -27,9 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
             grid.appendChild(square);
             squares.push(square);
 
+            // normal click
             square.addEventListener('click', function(e) {
                 click(square)
             })
+
+            //cntl and left click
+            square.oncontextmenu = function(e) {
+                e.preventDefault()
+                addFlag(square)
+            }
         }
 
         //add numbers
@@ -55,6 +64,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     createBoard();
+
+    function addFlag(square){
+        if (isGameOver) return
+        if (!square.classList.contains('checked') ) {
+            if (!square.classList.contains('flag')) {
+                if (flags < bombAmount) {
+                    square.classList.add('flag')
+                    square.innerHTML = '🚩'
+                    flags ++
+                    flagsLeft.innerHTML = bombAmount-flags
+                    checkForWin()
+                }
+            } else {
+                square.classList.remove('flag')
+                square.innerHTML = ''
+                flags --
+                flagsLeft.innerHTML = bombAmount-flags
+            }
+        }
+    }
 
     // click on square actions
     function click(square){
@@ -140,6 +169,20 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
 
+    }
+
+    //check for win
+    function checkForWin() {
+        let matches = 0
+        for (let i=0; i<squares.length; i++) {
+            if (squares[i].classList.contains('flag') && squares[i].classList.contains('bomb')) {
+                matches ++
+            }
+            if (matches === bombAmount) {
+                console.log('YOU WIN!')
+                isGameOver = true
+            }
+        }
     }
 });
 

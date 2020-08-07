@@ -1,3 +1,12 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    width: 500px;
+    align-content: center;
+}
+
 .grid {
     padding: 10px;
     height: 400px;
@@ -5,36 +14,42 @@
     display: flex;
     flex-wrap: wrap;
     background-color: lightblue;
+    margin: 20px 10px 10px 10px;
 }
 
+
 .grid div {
+    box-sizing: border-box;
     border: 3px outset #87cefa;
-    height: 34px;
-    width: 34px;
-    text-align: center;
-    
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4em;
 }
 
 .checked {
-    background-color: hsl(195, 53%, 70%);
-    border: 3px double hsl(195, 53%, 50%) !important;
-    border-style: solid !important;
+    background-color: hsl(195, 30%, 70%);
+    border: 1px solid hsl(195, 30%, 60%) !important;
 }
 
 [data="1"] {
-    color: crimson !important;
+    color: hsl(0, 80%, 40%) !important;
 }
 [data="2"] {
-    color:  green !important;
+    color:  hsl(45, 100%, 30%) !important;
 }
 [data="3"] {
-    color: blue !important;
+    color: hsl(135, 80%, 30%) !important;
 }
 [data="4"] {
-    color: purple !important;
+    color: hsl(225, 80%, 50%) !important;
+}
+[data="5"] {
+    color: hsl(270, 50%, 50%) !important;
+}
+[data="6"] {
+    color: hsl(315, 50%, 50%) !important;
 }
 
-
-.bomb {
-    background-color: orange;
-}
